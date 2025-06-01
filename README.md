@@ -1,10 +1,10 @@
-# 🧠 Talk to Your Data
+#  Talk to Your Data
 
 **Talk to Your Data** is an interactive Streamlit application powered by LLMs that enables users to upload `.db`, `.csv`, or `.xlsx` files and interact with the data using natural language. The app can automatically generate SQL queries, create charts using Plotly, and suggest insightful questions based on your dataset schema.
 
 ---
 
-## 🚀 Features
+##  Features
 
 - 📂 Upload and preview SQLite, CSV, and Excel files.
 - 🧠 Ask natural language questions about your data.
@@ -15,7 +15,7 @@
 
 ---
 
-## 🧱 Project Structure
+##  Project Structure
 
 - `app.py`: Main Streamlit app file. Handles UI, file uploads, schema parsing, and interaction with the backend logic.
 - `groq_layer.py`: Logic layer that uses Groq’s LLM API to:
@@ -26,7 +26,7 @@
 
 ---
 
-## 📦 Dependencies
+##  Dependencies
 
 Install the following packages (recommended using a virtual environment):
 
