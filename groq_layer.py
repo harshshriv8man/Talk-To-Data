@@ -1,7 +1,11 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 from groq import Groq
 import ast
+import os
 
-client = Groq(api_key="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")
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 SQL_SYSTEM = """You are a SQLite SQL expert. The user will give a database schema and a natural language question.
 Respond ONLY with a syntactically correct SQL SELECT query.
