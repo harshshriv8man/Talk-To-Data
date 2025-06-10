@@ -1,20 +1,27 @@
-from dotenv import load_dotenv
 import streamlit as st
 import os
 from groq import Groq
 
-# Load environment variables (local development)
-load_dotenv()  
+# Load environment variables only for local development (when running locally)
+# If you're deploying on Streamlit Cloud, use Streamlit secrets.
+if not st.secrets:
+    from dotenv import load_dotenv
+    load_dotenv()  # Only needed locally for development
 
-# Fetch API key (priority: .env > Streamlit secrets)
-GROQ_API_KEY = os.getenv("GROQ_API_KEY") or st.secrets.get("GROQ_API_KEY")
+# Fetch API key (priority: Streamlit secrets > .env)
+GROQ_API_KEY = st.secrets.get("GROQ_API_KEY") or os.getenv("GROQ_API_KEY")
 
 # Initialize client only if the key exists (prevent crashes)
-try:
-    client = Groq(api_key=GROQ_API_KEY) if GROQ_API_KEY else None
-except Exception as e:
-    st.error(f"❌ Failed to initialize Groq client: {e}")
+if GROQ_API_KEY:
+    try:
+        client = Groq(api_key=GROQ_API_KEY)
+    except Exception as e:
+        st.error(f"❌ Failed to initialize Groq client: {e}")
+        client = None  # Graceful fallback
+else:
+    st.error("❌ Groq API Key not found in Streamlit secrets or .env!")
     client = None  # Graceful fallback
+
 
 SQL_SYSTEM = """
 You are a SQLite SQL expert. If the user's question is ambiguous, ask exactly one clarifying question instead of SQL. Otherwise, think step by step, and respond ONLY with a syntactically correct SQL SELECT query.
