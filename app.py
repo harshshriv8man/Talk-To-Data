@@ -150,6 +150,10 @@ with tabs[1]:
             st.markdown(f"**Q#{len(st.session_state.chart_history)-idx}:** {entry['question']}")
             with st.expander("View Chart"):
                 st.code(entry["code"], language="python")
-                st.plotly_chart(entry["fig"], use_container_width=True)
+                st.plotly_chart(
+                    entry["fig"],
+                    use_container_width=True,
+                    key=f"history_{idx}"
+                )
     else:
         st.info("No charts have been generated this session.")
